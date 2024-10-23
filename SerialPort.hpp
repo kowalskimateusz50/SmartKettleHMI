@@ -1,3 +1,14 @@
+///
+/// \file 			SerialPort.hpp
+/// \author 		Geoffrey Hunter <gbmhunter@gmail.com> (www.mbedded.ninja)
+/// \created		2014-01-07
+/// \last-modified 	2023-02-13
+/// \brief			The main serial port class.
+/// \details
+///					See README.rst in repo root dir for more info.
+
+// Header guard
+
 #ifndef SERIALPORT_HPP
 #define SERIALPORT_HPP
 

@@ -34,7 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
     this->setPalette(palette);
 
     //Initialize serial port
-
+    SerialPort serialPort("/dev/ttyACM0", BaudRate::B_115200, NumDataBits::EIGHT, Parity::NONE, NumStopBits::ONE, HardwareFlowControl::ON, SoftwareFlowControl::OFF);
+    serialPort.SetTimeout(1000); // Block when reading for 1000ms
 
 
 }

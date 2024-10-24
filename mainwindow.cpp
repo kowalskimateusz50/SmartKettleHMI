@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "SerialPort.hpp"
+#include "serialportlistener.h"
 
 using namespace mn::CppLinuxSerial;
 
@@ -33,11 +33,6 @@ MainWindow::MainWindow(QWidget *parent)
     palette.setBrush(QPalette::Window, bkgnd);
     this->setPalette(palette);
 
-    //Initialize serial port
-    SerialPort serialPort("/dev/ttyACM0", BaudRate::B_115200, NumDataBits::EIGHT, Parity::NONE, NumStopBits::ONE, HardwareFlowControl::ON, SoftwareFlowControl::OFF);
-    serialPort.SetTimeout(1000); // Block when reading for 1000ms
-
-
 }
 
 MainWindow::~MainWindow()
@@ -56,6 +51,7 @@ void MainWindow::on_DisconnectPushButton_clicked()
 //Connect Button
 void MainWindow::on_ConnectPushButton_clicked()
 {
+    SerialPortListening.start();
 
 }
 

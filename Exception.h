@@ -8,8 +8,8 @@
 /// \details
 ///		See README.md in root dir for more info.
 
-#ifndef EXCEPTION_HPP
-#define EXCEPTION_HPP
+#ifndef EXCEPTION_H
+#define EXCEPTION_H
 
 // System includes
 #include <iostream>
@@ -44,4 +44,4 @@ private:
 #define THROW_EXCEPT(arg) throw Exception(__FILE__, __LINE__, arg);
 
 
-#endif // EXCEPTION_HPP
+#endif // EXCEPTION_H

@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QDebug>
-#include "serialportlistener.h"
+#include "SerialPortCom.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,8 +27,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    SerialPortListener SerialPortListening;
-
+    SerialPortCom SerialPortComThread; //
 
 
 };

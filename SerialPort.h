@@ -8,9 +8,8 @@
 ///					See README.rst in repo root dir for more info.
 
 // Header guard
-
-#ifndef SERIALPORT_HPP
-#define SERIALPORT_HPP
+#ifndef SERIAL_PORT_SERIAL_PORT_H
+#define SERIAL_PORT_SERIAL_PORT_H
 
 // System headers
 #include <string>
@@ -26,7 +25,7 @@
 #include <cstdint>
 
 // User headers
-#include "Exception.hpp"
+#include "Exception.h"
 
 namespace mn {
 namespace CppLinuxSerial {
@@ -107,7 +106,7 @@ enum class State {
 class SerialPort {
 
 public:
-    /// \brief      Default constructor. You must specify at least the device before calling Open().
+        /// \brief      Default constructor. You must specify at least the device before calling Open().
     SerialPort();
 
     /// \brief      Constructor that sets up serial port with the basic (required) parameters.
@@ -122,6 +121,11 @@ public:
 
     /// \brief      Constructor that sets up serial port with the basic parameters, and a custom baud rate.
     SerialPort(const std::string &device, speed_t baudRate);
+
+
+    //Testing initialize
+    void Initialize(const std::string &device, BaudRate baudRate, NumDataBits numDataBits, Parity parity, NumStopBits numStopBits,
+                    HardwareFlowControl hardwareFlowControl, SoftwareFlowControl softwareFlowControl);
 
     /// \brief      Destructor. Closes serial port if still open.
     virtual ~SerialPort();
@@ -267,4 +271,4 @@ private:
 } // namespace CppLinuxSerial
 } // namespace mn
 
-#endif // SERIALPORT_HPP
+#endif // #ifndef SERIAL_PORT_SERIAL_PORT_H

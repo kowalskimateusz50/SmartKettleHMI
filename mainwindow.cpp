@@ -66,7 +66,7 @@ void MainWindow::on_SendPushButton_clicked()
 {
     qDebug() << "\nSend PushButton activated";
     qDebug() << "\nWiriting Hello";
-    SerialPortComThread.WriteToPort("Hello");
+    SerialPortComThread.WriteToPort("T099");
 }
 
 

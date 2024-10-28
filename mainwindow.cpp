@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "SerialPort.hpp"
 
 using namespace mn::CppLinuxSerial;
 
@@ -33,9 +32,12 @@ MainWindow::MainWindow(QWidget *parent)
     palette.setBrush(QPalette::Window, bkgnd);
     this->setPalette(palette);
 
-    //Initialize serial port
+    //Initialize serial port connection
+    qDebug() << "\nSerial Port communication initialization: ";
+    SerialPortComThread.InitSerialPortCom();
 
-
+    //Start serial port listening thread
+    SerialPortComThread.start();
 
 }
 
@@ -56,16 +58,20 @@ void MainWindow::on_DisconnectPushButton_clicked()
 void MainWindow::on_ConnectPushButton_clicked()
 {
 
+
 }
 
 //Send comment
 void MainWindow::on_SendPushButton_clicked()
 {
-
+    qDebug() << "\nSend PushButton activated";
+    qDebug() << "\nWiriting Hello";
+    SerialPortComThread.WriteToPort("T099");
 }
 
 
 void MainWindow::on_ClearPushButton_clicked()
 {
     ui->ReceivedMessageOutput->clear();
+    qDebug() << "\nClear Pushbutton";
 }

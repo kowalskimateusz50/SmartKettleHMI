@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QString>
 #include <QDebug>
+#include "SerialPortCom.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,10 +27,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QString ReceivedCharacter;
-    QString ReceivedBuffer;
-    const QString code = "/";
-    int codeSize;
+    SerialPortCom SerialPortComThread; //
 
 
 };

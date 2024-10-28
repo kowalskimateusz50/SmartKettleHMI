@@ -26,14 +26,13 @@
 #include <iterator>
 
 // User includes
-#include "Exception.hpp"
-#include "SerialPort.hpp"
+#include "Exception.h"
+#include "SerialPort.h"
 
 #define    BOTHER 0010000
 
 namespace mn {
 namespace CppLinuxSerial {
-
 SerialPort::SerialPort() {
     echo_ = false;
     timeout_ms_ = defaultTimeout_ms_;
@@ -71,6 +70,20 @@ SerialPort::SerialPort(const std::string& device, BaudRate baudRate, NumDataBits
 SerialPort::SerialPort(const std::string &device, BaudRate baudRate, NumDataBits numDataBits, Parity parity, NumStopBits numStopBits,
                        HardwareFlowControl hardwareFlowControl, SoftwareFlowControl softwareFlowControl):
     SerialPort() {
+    device_ = device;
+    baudRateType_ = BaudRateType::STANDARD;
+    baudRateStandard_ = baudRate;
+    numDataBits_ = numDataBits;
+    parity_ = parity;
+    numStopBits_ = numStopBits;
+    hardwareFlowControl_ = hardwareFlowControl;
+    softwareFlowControl_ = softwareFlowControl;
+}
+
+
+//Test function
+void SerialPort::Initialize(const std::string &device, BaudRate baudRate, NumDataBits numDataBits, Parity parity, NumStopBits numStopBits,
+                            HardwareFlowControl hardwareFlowControl, SoftwareFlowControl softwareFlowControl) {
     device_ = device;
     baudRateType_ = BaudRateType::STANDARD;
     baudRateStandard_ = baudRate;

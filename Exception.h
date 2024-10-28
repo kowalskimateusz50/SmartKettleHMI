@@ -1,5 +1,15 @@
-#ifndef EXCEPTION_HPP
-#define EXCEPTION_HPP
+///
+/// \file 				Exception.hpp
+/// \author 			Geoffrey Hunter (www.mbedded.ninja) <gbmhunter@gmail.com>
+/// \edited             n/a
+/// \created			2017-11-09
+/// \last-modified		2017-11-27
+/// \brief 				Contains the Exception class. File originally from https://github.com/mbedded-ninja/CppUtils.
+/// \details
+///		See README.md in root dir for more info.
+
+#ifndef EXCEPTION_H
+#define EXCEPTION_H
 
 // System includes
 #include <iostream>
@@ -34,4 +44,4 @@ private:
 #define THROW_EXCEPT(arg) throw Exception(__FILE__, __LINE__, arg);
 
 
-#endif // EXCEPTION_HPP
+#endif // EXCEPTION_H

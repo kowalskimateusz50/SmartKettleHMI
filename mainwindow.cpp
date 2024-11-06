@@ -26,7 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->DisconnectLabel->setPalette(sample_palette);
 
     //Set background
-    QPixmap bkgnd("/home/mati/Desktop/QtProjects/KettleHMIDesktop/Graphics/Background2.jpg");
+    QPixmap bkgnd(":/resources/img/Background2.jpg");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette palette;
     palette.setBrush(QPalette::Window, bkgnd);

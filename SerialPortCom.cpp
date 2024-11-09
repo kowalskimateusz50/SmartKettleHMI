@@ -1,20 +1,57 @@
 #include "SerialPortCom.h"
+#include "mainwindow.h"
 
-//Thread execution
-void SerialPortCom::run() {
-
-    while(true) {
-        qDebug() << "\nReading";
-        std::string readData = ReadFromPort();
-
-        qDebug() << "\nReadData: " << readData;
-
-        QThread::msleep(1000);
-    }
-
+/* Class constructor
+ *  Initialization of communication sequence variable
+*/
+SerialPortCom::SerialPortCom()
+{
+    int SequenceStep = 0;
 }
 
-void SerialPortCom::InitSerialPortCom() {
+//Thread execution
+void SerialPortCom::run()
+{
+
+    //Non endless loop
+    while(true)
+    {
+        switch (SequenceStep)
+        {
+
+            //Initialization step
+            case 0:
+                {
+                    qDebug() << "\nStarting sequence of communication: ";
+                    SequenceStep = 100;
+                    break;
+                }
+            //Communicate ready for data read status
+            case 100:
+                {
+                    qDebug() << "\nWiriting listen status";
+                    WriteToPort("listetning");
+                    //Wait some time
+                    QThread::msleep(5000);
+                    SequenceStep = 200;
+                    break;
+                }
+            //Read data and display
+            case 200:
+                {
+                    qDebug() << "\nReading data";
+                    std::string readData = ReadFromPort();
+                    qDebug() << readData;
+                    emit TransmitTemperatureToDisplay(readData); //Send temperature readings to GUI
+                    SequenceStep = 100;
+                    break;
+                }
+        }
+    }
+}
+
+void SerialPortCom::InitSerialPortCom()
+{
 
     /*Future defining from file
      * Use "/dev/ttyACM0" for Linux Desktop running
@@ -41,7 +78,14 @@ std::string SerialPortCom::ReadFromPort() {
     return readData;
 }
 
+void SerialPortCom::TransmitTemperatureToDisplay(std::string Temperature) {
+
+}
+
 SerialPortCom::~SerialPortCom() {
     serialPort.Close();
 }
+
+
+
 

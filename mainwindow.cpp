@@ -12,25 +12,26 @@ MainWindow::MainWindow(QWidget *parent)
     //Adding title for widget
     QWidget::setWindowTitle("Serial Port Connection");
 
-    //Set font colors
-    QPalette sample_palette;
-    sample_palette.setColor(QPalette::WindowText, Qt::red);
+    //Set font colors and size
+    QPalette TextPalette;
+    QFont TextFont("Arial", 15);
+    TextPalette.setColor(QPalette::WindowText, Qt::red);
 
 
     //Propagate palette style for
-    ui->SendMessageLabel->setPalette(sample_palette);
-    ui->ReceivedMessageLabel->setPalette(sample_palette);
-    ui->ConnectLabel->setPalette(sample_palette);
-    ui->StatusLabel->setPalette(sample_palette);
-    ui->DisconnectLabel->setPalette(sample_palette);
-    ui->DisconnectLabel->setPalette(sample_palette);
+    ui->QLabelTemperatureDisplay->setPalette(TextPalette);
+    ui->QLabelTemperatureDisplay->setFont(TextFont);
+
 
     //Set background
     QPixmap bkgnd(":/resources/img/Background2.jpg");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
-    QPalette palette;
-    palette.setBrush(QPalette::Window, bkgnd);
-    this->setPalette(palette);
+    QPalette ScreenPalette;
+    ScreenPalette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(ScreenPalette);
+
+
+
 
     //Initialize serial port connection
     qDebug() << "\nSerial Port communication initialization: ";
@@ -39,6 +40,21 @@ MainWindow::MainWindow(QWidget *parent)
     //Start serial port listening thread
     SerialPortComThread.start();
 
+    //Connect signals and slots
+    connect(&SerialPortComThread,SIGNAL(SerialPortCom::TransmitTemperatureToDisplay(std::string)),this,SLOT(DisplayReceivedTemperature(std::string)));
+
+    //Initialize Qlabel text display
+    ui->QLabelTemperatureDisplay->setText("Hello temperature");
+
+}
+
+void MainWindow::DisplayReceivedTemperature(std::string Temperature)
+{
+    qDebug() << "\nTemperature write slot activated: ";
+
+    QString DisplayTemperature = QString::fromStdString(Temperature);
+    //Display temperature on the screen
+    ui->QLabelTemperatureDisplay->setText(DisplayTemperature);
 }
 
 MainWindow::~MainWindow()
@@ -48,30 +64,6 @@ MainWindow::~MainWindow()
 }
 
 
-//Disconnet button
-void MainWindow::on_DisconnectPushButton_clicked()
-{
-
-}
-
-//Connect Button
-void MainWindow::on_ConnectPushButton_clicked()
-{
 
 
-}
 
-//Send comment
-void MainWindow::on_SendPushButton_clicked()
-{
-    qDebug() << "\nSend PushButton activated";
-    qDebug() << "\nWiriting Hello";
-    SerialPortComThread.WriteToPort("T099");
-}
-
-
-void MainWindow::on_ClearPushButton_clicked()
-{
-    ui->ReceivedMessageOutput->clear();
-    qDebug() << "\nClear Pushbutton";
-}

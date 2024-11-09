@@ -18,12 +18,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-
-    void on_SendPushButton_clicked();
-    void on_DisconnectPushButton_clicked();
-    void on_ConnectPushButton_clicked();
-    void on_ClearPushButton_clicked();
+public slots:
+    void DisplayReceivedTemperature(std::string Temperature);
 
 private:
     Ui::MainWindow *ui;

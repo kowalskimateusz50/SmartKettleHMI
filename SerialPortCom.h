@@ -5,14 +5,15 @@
 #include <QThread>
 #include <QMutex>
 #include <QDebug>
-#include <iostream>
 #include "SerialPort.h"
+//#include "mainwindow.h"
 
 using namespace mn::CppLinuxSerial;
 
-class SerialPortCom : public QThread {
+class SerialPortCom : public QThread  {
 
 public:
+    SerialPortCom();
 
     void InitSerialPortCom();
 
@@ -24,11 +25,13 @@ public:
 
 private:
     SerialPort serialPort;
+    int SequenceStep;
 
 protected:
     //QThread interface
     void run();
-
+signals:
+    void TransmitTemperatureToDisplay(std::string Temperature);
 };
 
 #endif // SERIALPORTCOM_H

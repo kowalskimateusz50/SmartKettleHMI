@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 11.0.3, 2024-11-06T19:21:11. -->
+<!-- Written by QtCreator 11.0.3, 2024-11-09T13:39:35. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -171,6 +171,7 @@
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_CXX_FLAGS_INIT:STRING=%{Qt:QML_DEBUG_FLAG}
+-DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake</value>
     <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/home/mati/Desktop/QtProjects/build-KettleHMIDesktop-RPI-Release</value>

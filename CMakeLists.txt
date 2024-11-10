@@ -26,8 +26,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Exception.h
         SerialPort.h
         SerialPort.cpp
-        SerialPortCom.h SerialPortCom.cpp
         resource.qrc
+        SerialPortThread.h
+        SerialPortThread.cpp
+
 
 
     )

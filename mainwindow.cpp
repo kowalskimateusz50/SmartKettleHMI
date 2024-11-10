@@ -9,6 +9,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    //Thread connecting
+    connect(this, &MainWindow::startSerialPortThread, &serialPortThread, &SerialPortThread::doWork);
+    serialPortThread.moveToThread(_thread);
+    _thread->start();
+
+    //Functional connecting
+    connect(&serialPortThread, &SerialPortThread::TransmitTemperatureToDisplay, this, &MainWindow::DisplayReceivedTemperature);
+
     //Adding title for widget
     QWidget::setWindowTitle("Serial Port Connection");
 
@@ -17,36 +25,30 @@ MainWindow::MainWindow(QWidget *parent)
     QFont TextFont("Arial", 15);
     TextPalette.setColor(QPalette::WindowText, Qt::red);
 
-
     //Propagate palette style for
     ui->QLabelTemperatureDisplay->setPalette(TextPalette);
     ui->QLabelTemperatureDisplay->setFont(TextFont);
 
 
-    //Set background
+    //Set background settings
     QPixmap bkgnd(":/resources/img/Background2.jpg");
     bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
     QPalette ScreenPalette;
     ScreenPalette.setBrush(QPalette::Window, bkgnd);
     this->setPalette(ScreenPalette);
 
-
-
-
     //Initialize serial port connection
     qDebug() << "\nSerial Port communication initialization: ";
-    SerialPortComThread.InitSerialPortCom();
-
-    //Start serial port listening thread
-    SerialPortComThread.start();
-
-    //Connect signals and slots
-    connect(&SerialPortComThread,SIGNAL(SerialPortCom::TransmitTemperatureToDisplay(std::string)),this,SLOT(DisplayReceivedTemperature(std::string)));
+    serialPortThread.InitSerialPortCom();
 
     //Initialize Qlabel text display
     ui->QLabelTemperatureDisplay->setText("Hello temperature");
 
+
+    qDebug() << "\n Starting thread: ";
+    emit startSerialPortThread();
 }
+
 
 void MainWindow::DisplayReceivedTemperature(std::string Temperature)
 {
@@ -59,7 +61,6 @@ void MainWindow::DisplayReceivedTemperature(std::string Temperature)
 
 MainWindow::~MainWindow()
 {
-
     delete ui;
 }
 

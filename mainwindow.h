@@ -2,9 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QThread>
 #include <QString>
 #include <QDebug>
-#include "SerialPortCom.h"
+#include "SerialPortThread.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,13 +19,16 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
+private slots:
     void DisplayReceivedTemperature(std::string Temperature);
+
+signals:
+    void startSerialPortThread(int n = 20);
 
 private:
     Ui::MainWindow *ui;
-    SerialPortCom SerialPortComThread; //
-
+    SerialPortThread serialPortThread; //Serial port com thread instance
+    QThread* _thread = new QThread;
 
 };
 #endif // MAINWINDOW_H

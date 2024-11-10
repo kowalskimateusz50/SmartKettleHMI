@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 11.0.3, 2024-11-09T13:39:35. -->
+<!-- Written by QtCreator 11.0.3, 2024-11-10T17:10:30. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -171,6 +171,9 @@
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_CXX_FLAGS_INIT:STRING=%{Qt:QML_DEBUG_FLAG}
+-DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
+-DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
+-DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake</value>
@@ -755,6 +758,7 @@
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
     <value type="bool" key="RunConfiguration.UseLibrarySearchPath">true</value>
     <value type="bool" key="RunConfiguration.UseQmlDebuggerAuto">true</value>
+    <value type="QString" key="RunConfiguration.WorkingDirectory.default">/home/mati/Desktop/QtProjects/build-KettleHMIDesktop-Desktop_Qt_6_6_0_GCC_64bit-Debug</value>
    </valuemap>
    <value type="qlonglong" key="ProjectExplorer.Target.RunConfigurationCount">1</value>
   </valuemap>

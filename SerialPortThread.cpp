@@ -1,4 +1,4 @@
-#include "SerialPortThread.h"
+﻿#include "SerialPortThread.h"
 
 SerialPortThread::SerialPortThread()
 {
@@ -27,7 +27,7 @@ void SerialPortThread::doWork(int n)
                 SequenceStep = 100;
                 break;
             }
-            //Communicate ready for data read status
+            //Communicate ready for receivers data
             case 100:
             {
                 qDebug() << "\nWiriting listen status";
@@ -41,14 +41,17 @@ void SerialPortThread::doWork(int n)
             case 200:
             {
                 qDebug() << "\nReading data";
-              /*  while(readData == "")
-                {
-                    readData = ReadFromPort();
-                } */
                 readData = ReadFromPort();
                 qDebug() << readData;
                 emit TransmitTemperatureToDisplay(readData); //Send temperature readings to GUI
-                SequenceStep = 100;
+                SequenceStep = 300;
+                break;
+            }
+            //Comunicate ready for transmit data
+            case 300:
+            {
+
+
                 break;
             }
         }

@@ -27,13 +27,13 @@ void SerialPortThread::doWork(int n)
                 SequenceStep = 100;
                 break;
             }
-            //Communicate ready for receivers data
+            //Communicate ready for receive data
             case 100:
             {
-                qDebug() << "\nWiriting listen status";
-                WriteToPort("listetning");
+                qDebug() << "\nCommunicate ready for read";
+                WriteToPort("rd");
                 //Wait some time
-                QThread::msleep(500);
+                QThread::msleep(200);
                 SequenceStep = 200;
                 break;
             }
@@ -50,9 +50,18 @@ void SerialPortThread::doWork(int n)
             //Comunicate ready for transmit data
             case 300:
             {
-
-
+                std::string TempAdjust = "TempAdjust:069;.";
+                qDebug() << "\nCommunicate reeady for writing";
+                WriteToPort("wr");
+                //Wait some time
+                QThread::msleep(200);
+                SequenceStep = 400;
                 break;
+            }
+            case 400:
+            {
+
+                WriteToPort("wr");
             }
         }
     }

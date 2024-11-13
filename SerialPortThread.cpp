@@ -33,7 +33,7 @@ void SerialPortThread::doWork(int n)
                 qDebug() << "\nCommunicate ready for read";
                 WriteToPort("rd");
                 //Wait some time
-                QThread::msleep(200);
+                QThread::msleep(10000);
                 SequenceStep = 200;
                 break;
             }
@@ -42,26 +42,40 @@ void SerialPortThread::doWork(int n)
             {
                 qDebug() << "\nReading data";
                 readData = ReadFromPort();
-                qDebug() << readData;
-                emit TransmitTemperatureToDisplay(readData); //Send temperature readings to GUI
-                SequenceStep = 300;
+
+                if(readData.length() > 0)
+                {
+                    //Reading data sucessfull
+                    qDebug() << readData;
+                    emit TransmitTemperatureToDisplay(readData); //Send temperature readings to GUI
+                    QThread::msleep(1000);
+                    SequenceStep = 300;
+                }
+                else
+                {
+                    //Repeat reading data
+                    SequenceStep = 0;
+                }
                 break;
             }
             //Comunicate ready for transmit data
             case 300:
             {
-                std::string TempAdjust = "TempAdjust:069;.";
                 qDebug() << "\nCommunicate reeady for writing";
                 WriteToPort("wr");
                 //Wait some time
-                QThread::msleep(200);
+                QThread::msleep(300);
                 SequenceStep = 400;
                 break;
             }
+            //Send data through serial port
             case 400:
             {
-
-                WriteToPort("wr");
+                std::string TempAdjust = "TempAdjust:069;.";
+                WriteToPort(TempAdjust);
+                //Place for future data handshake
+                SequenceStep = 0;
+                break;
             }
         }
     }

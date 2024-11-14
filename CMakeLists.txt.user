@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 11.0.3, 2024-11-13T21:45:23. -->
+<!-- Written by QtCreator 11.0.3, 2024-11-13T22:41:40. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -171,6 +171,7 @@
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_CXX_FLAGS_INIT:STRING=%{Qt:QML_DEBUG_FLAG}
+-DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake
 -DCMAKE_TOOLCHAIN_FILE:UNINITIALIZED=/home/mati/qt6/pi/lib/cmake/Qt6/qt.toolchain.cmake

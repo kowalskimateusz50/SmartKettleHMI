@@ -18,7 +18,6 @@ void SerialPortThread::doWork(int n)
     {
         switch (SequenceStep)
         {
-
             //Initialization step
             case 0:
             {
@@ -30,24 +29,24 @@ void SerialPortThread::doWork(int n)
             //Communicate ready for receive data
             case 100:
             {
-                qDebug() << "\nCommunicate ready for read";
+                //qDebug() << "\nCommunicate ready for read";
                 WriteToPort("rd");
                 //Wait some time
-                QThread::msleep(5000);
+                QThread::msleep(100);
                 SequenceStep = 200;
                 break;
             }
             //Read data and display
             case 200:
             {
-                qDebug() << "\nReading data";
+                //qDebug() << "\nReading data";
                 readData = ReadFromPort();
+                qDebug() << readData;
+
                 if(readData.length() > 0)
                 {
-                    qDebug() << readData;
                     emit TransmitTemperatureToDisplay(readData); //Send temperature readings to GUI
                     //Reading data sucessfull
-
                     SequenceStep = 300;
                 }
                 else
@@ -60,10 +59,10 @@ void SerialPortThread::doWork(int n)
             //Comunicate ready for transmit data
             case 300:
             {
-                qDebug() << "\nCommunicate reeady for writing";
+                //qDebug() << "\nCommunicate reeady for writing";
                 WriteToPort("wr");
                 //Wait some time
-                QThread::msleep(5000);
+                QThread::msleep(100);
                 SequenceStep = 400;
                 break;
             }
@@ -74,7 +73,7 @@ void SerialPortThread::doWork(int n)
                 WriteToPort(TempAdjust);
                 //Place for future data handshake
                 SequenceStep = 0;
-                QThread::msleep(5000);
+                QThread::msleep(100);
                 break;
             }
         }

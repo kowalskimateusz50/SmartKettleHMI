@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::DisplayReceivedTemperature(std::string Temperature)
 {
-    qDebug() << "\nTemperature write slot activated: ";
+    //qDebug() << "\nTemperature write slot activated: ";
 
     QString DisplayTemperature = QString::fromStdString(Temperature);
     //Display temperature on the screen

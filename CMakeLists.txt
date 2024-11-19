@@ -29,8 +29,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         resource.qrc
         SerialPortThread.h
         SerialPortThread.cpp
-
-
+        SerialPortData.h
+        SerialPortData.cpp
 
     )
 # Define target properties for Android with Qt 6 as:

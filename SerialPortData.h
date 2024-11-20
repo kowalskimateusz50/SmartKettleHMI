@@ -15,20 +15,26 @@ private:
     //Input Data (STM32 -> RPI)
     string iInputData;
     string iWatchDog;
-    int iTemperatureReading;
+    float iTemperatureReading;
     int iOperationStatus;
     int iErrorCode;
 
     //Output data (RPI -> STM32)
     string oOutputData;
     string oWatchDog;
-    int TemperatureAdjustment;
-    int StartRequest;
-    int StopRequest;
-
+    int oTemperatureAdjustment;
+    int oStartRequest;
+    int oStopRequest;
 
 public:
+
     SerialPortData();
+    void readInputData(string InputData);
+    int extractTemperatureReading();
+
+    //Helper functions
+    int findValueAfterPrefix(string iBaseString, string iSubString);
+    string extractDataFromString(string iInputData, string iPrefix, char iEndChar);
 
 };
 

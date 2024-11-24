@@ -2,13 +2,17 @@
 #define SERIALPORTDATA_H
 
 #include <QDebug>
+#include <QObject>
 #include <string>
+#include <iomanip>
 
 
 using namespace std;
 
-class SerialPortData
+class SerialPortData : public QObject
 {
+    Q_OBJECT
+
 
 private:
 
@@ -35,6 +39,9 @@ public:
     //Helper functions
     int findValueAfterPrefix(string iBaseString, string iSubString);
     string extractDataFromString(string iInputData, string iPrefix, char iEndChar);
+
+signals:
+    void TransmitTemperatureToDisplay(float Temperature);
 
 };
 

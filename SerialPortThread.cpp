@@ -1,11 +1,8 @@
 ﻿#include "SerialPortThread.h"
 
-SerialPortThread::SerialPortThread()
-{
+SerialPortThread::SerialPortThread(){}
 
-}
-
-void SerialPortThread::doWork(int n)
+void SerialPortThread::doWork()
 {
     //Initialize main sequence step variable
     int SequenceStep = 0;
@@ -39,14 +36,13 @@ void SerialPortThread::doWork(int n)
             //Read data and display
             case 200:
             {
-                //qDebug() << "\nReading data";
-                readData = ReadFromPort();
-                qDebug() << readData;
+                string inputData = ReadFromPort();
 
-                if(readData.length() > 0)
-                {
-                    emit TransmitTemperatureToDisplay(readData); //Send temperature readings to GUI
+                if(inputData.length() > 0)
+                {                   
                     //Reading data sucessfull
+                    //qDebug() << "\nReceived: " << inputData;
+                    _serialPortData->readInputData(inputData);
                     SequenceStep = 300;
                 }
                 else
@@ -97,16 +93,24 @@ void SerialPortThread::InitSerialPortCom()
 
 }
 
-void SerialPortThread::WriteToPort(const std::string& data) {
+void SerialPortThread::WriteToPort(const std::string& data)
+{
     serialPort.Write(data);
 }
 
-std::string SerialPortThread::ReadFromPort() {
+std::string SerialPortThread::ReadFromPort()
+{
     std::string readData;
     serialPort.Read(readData);
 
     return readData;
 }
+
+void SerialPortThread::GetDataObject(SerialPortData* iSerialPortData)
+{
+    _serialPortData =  iSerialPortData;
+}
+
 
 SerialPortThread::~SerialPortThread() {
     serialPort.Close();

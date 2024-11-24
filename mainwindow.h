@@ -5,7 +5,9 @@
 #include <QThread>
 #include <QString>
 #include <QDebug>
+#include <QPixmap>
 #include "SerialPortThread.h"
+#include "SerialPortData.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,15 +22,23 @@ public:
     ~MainWindow();
 
 private slots:
-    void DisplayReceivedTemperature(std::string Temperature);
+    void DisplayReceivedTemperature(float Temperature);
+
+    void on_pushButtonSave_clicked();
 
 signals:
-    void startSerialPortThread(int n = 20);
+    void startSerialPortThread();
 
 private:
-    Ui::MainWindow *ui;
-    SerialPortThread serialPortThread; //Serial port com thread instance
+
+    Ui::MainWindow   *ui;
+    SerialPortData* serialPortData = new SerialPortData;
+    SerialPortThread serialPortThread;
     QThread* _thread = new QThread;
+
+    void setSylesSettings();
+    void handlingThreads();
+    void signalsAndSlotsConnecting();
 
 };
 #endif // MAINWINDOW_H

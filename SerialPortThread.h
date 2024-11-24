@@ -6,6 +6,7 @@
 #include <QThread>
 #include <QDebug>
 #include "SerialPort.h"
+#include "SerialPortData.h"
 
 using namespace mn::CppLinuxSerial;
 
@@ -13,6 +14,7 @@ using namespace mn::CppLinuxSerial;
 class SerialPortThread : public QObject
 {
     Q_OBJECT
+
 public:
     SerialPortThread();
 
@@ -22,16 +24,17 @@ public:
 
     std::string ReadFromPort();
 
+    void GetDataObject(SerialPortData* iSerialPortData);
+
     ~SerialPortThread();
 
 public slots:
-    void doWork(int n = 20); //Thread execution
-signals:
-    void TransmitTemperatureToDisplay(std::string Temperature);
+    void doWork(); //Thread execution
 
 private:
     SerialPort serialPort;
     int SequenceStep;
+    SerialPortData* _serialPortData;
 
 };
 

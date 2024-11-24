@@ -30,6 +30,8 @@ void SerialPortData::readInputData(string inputData)
     if(extractTemperatureReading())
     {
         qDebug() << "\n Temperature: " << iTemperatureReading << " 0c" << Qt::endl;
+        emit TransmitTemperatureToDisplay(iTemperatureReading); //Send temperature readings to GUI
+        //emit TransmitTemperatureToDisplay(iTemperatureReading); //Send temperature readings to GUI
     }
     else
     {
@@ -38,26 +40,8 @@ void SerialPortData::readInputData(string inputData)
 
 }
 
-int SerialPortData::extractTemperatureReading()
-{
-    //Prefixes definition
-    string tInputData = iInputData;
-    string tPrefix = "Temperature:";
-    char tEndChar = ';';
-
-    //Get temperature reading
-    iTemperatureReading = stof(extractDataFromString(tInputData, tPrefix, tEndChar));
-
-    //Error handling
-    if (iTemperatureReading > 0)
-        return 1;
-    else
-        return 0;
-}
-
 int SerialPortData::findValueAfterPrefix(string iBaseString, string iSubString)
 {
-
     int DiffChars;
 
     for (int i = 0; i <= iBaseString.length() - iSubString.length(); i++)
@@ -80,3 +64,35 @@ int SerialPortData::findValueAfterPrefix(string iBaseString, string iSubString)
     }
     return 0;
 }
+
+string SerialPortData::extractDataFromString(string iInputData, string iPrefix, char iEndChar)
+{
+    string RetString = "";
+
+    for (int i = findValueAfterPrefix(iInputData, iPrefix); iInputData[i] != iEndChar ; i++)
+    {
+        RetString += iInputData[i];
+    }
+
+    return RetString;
+}
+
+int SerialPortData::extractTemperatureReading()
+{
+    //Prefixes definition
+    string tInputData = iInputData;
+    string tPrefix = "Temperature:";
+    char tEndChar = ';';
+
+    qDebug() << "\nTemperature: " << extractDataFromString(tInputData, tPrefix, tEndChar) << Qt::endl;
+
+    //Get temperature reading
+    iTemperatureReading = stof(extractDataFromString(tInputData, tPrefix, tEndChar));
+
+    if (iTemperatureReading > 0)
+        return 1;
+    else
+        return 0;
+}
+
+

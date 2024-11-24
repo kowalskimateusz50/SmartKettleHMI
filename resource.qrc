@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/resources">
         <file>img/Background2.jpg</file>
+        <file>img/Background.jpg</file>
+        <file>img/thermometer.png</file>
     </qresource>
 </RCC>

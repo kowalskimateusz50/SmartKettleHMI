@@ -9,54 +9,23 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    //Thread connecting
-    connect(this, &MainWindow::startSerialPortThread, &serialPortThread, &SerialPortThread::doWork);
-    serialPortThread.moveToThread(_thread);
-    _thread->start();
+    signalsAndSlotsConnecting();
 
-    //Functional connecting
-    connect(&serialPortThread, &SerialPortThread::TransmitTemperatureToDisplay, this, &MainWindow::DisplayReceivedTemperature);
+    setSylesSettings();
 
-    //Adding title for widget
-    QWidget::setWindowTitle("Serial Port Connection");
-
-    //Set font colors and size
-    QPalette TextPalette;
-    QFont TextFont("Arial", 15);
-    TextPalette.setColor(QPalette::WindowText, Qt::red);
-
-    //Propagate palette style for
-    ui->QLabelTemperatureDisplay->setPalette(TextPalette);
-    ui->QLabelTemperatureDisplay->setFont(TextFont);
-
-
-    //Set background settings
-    QPixmap bkgnd(":/resources/img/Background2.jpg");
-    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
-    QPalette ScreenPalette;
-    ScreenPalette.setBrush(QPalette::Window, bkgnd);
-    this->setPalette(ScreenPalette);
-
-    //Initialize serial port connection
-    qDebug() << "\nSerial Port communication initialization: ";
-    serialPortThread.InitSerialPortCom();
-
-    //Initialize Qlabel text display
-    ui->QLabelTemperatureDisplay->setText("Hello temperature");
-
-
-    qDebug() << "\n Starting thread: ";
-    emit startSerialPortThread();
+    handlingThreads();
 }
 
 
-void MainWindow::DisplayReceivedTemperature(std::string Temperature)
+void MainWindow::DisplayReceivedTemperature(float Temperature)
 {
     //qDebug() << "\nTemperature write slot activated: ";
 
-    QString DisplayTemperature = QString::fromStdString(Temperature);
+    QString DisplayTemperature;
+    QTextStream DisplayTemperatureStream(&DisplayTemperature);
+    DisplayTemperatureStream << QString::number(Temperature, 'f', 2) << " Oc";
     //Display temperature on the screen
-    ui->QLabelTemperatureDisplay->setText(DisplayTemperature);
+    ui->qlabelTemperatureDisplay->setText(DisplayTemperature);
 }
 
 MainWindow::~MainWindow()
@@ -65,6 +34,88 @@ MainWindow::~MainWindow()
 }
 
 
+void MainWindow::on_pushButtonSave_clicked()
+{
+
+}
+
+void MainWindow::setSylesSettings()
+{
+    //Adding title for widget
+    QWidget::setWindowTitle("Smart kettle HMI");
+
+    //Define fonts and palettss
+    QPalette TextPalette;
+    QPalette HeaderPalette;
+    QFont HeaderFont("Arial", 26, QFont::Black);
+    QFont TextFont("Arial", 20, QFont::Normal);
+
+    TextPalette.setColor(QPalette::WindowText, QColor::fromRgb(255, 170, 0));
+    HeaderPalette.setColor(QPalette::WindowText, QColor::fromRgb(51, 204, 51));
+
+    //Propagate style for texts
+    ui->qlabelTemperatureDisplayText->setPalette(TextPalette);
+    ui->qlabelTemperatureDisplayText->setFont(TextFont);
+
+    ui->textEditTemperatureAdjust->setPalette(TextPalette);
+    ui->textEditTemperatureAdjust->setFont(TextFont);
+
+    ui->qlabelTemperatureAdjustText->setPalette(TextPalette);
+    ui->qlabelTemperatureAdjustText->setFont(TextFont);
+
+    ui->pushButtonSave->setStyleSheet("QPushButton:enabled { background-color: rgb(153, 255, 153); }\n");
+    ui->pushButtonSave->setFont(TextFont);
+
+    ui->textEditTemperatureAdjust->setStyleSheet("background-color: rgb(51, 204, 255);");
+
+    ui->qlabelTemperatureDisplay->setPalette(TextPalette);
+    ui->qlabelTemperatureDisplay->setFont(TextFont);
+
+    //Propagate style for headers
+    ui->qlabelSettings->setPalette(HeaderPalette);
+    ui->qlabelSettings->setFont(HeaderFont);
+
+    ui->qlabelActualReadings->setPalette(HeaderPalette);
+    ui->qlabelActualReadings->setFont(HeaderFont);
+
+    //Set background settings
+    QPixmap bkgnd(":/resources/img/Background.jpg");
+    bkgnd = bkgnd.scaled(this->size(), Qt::IgnoreAspectRatio);
+    QPalette ScreenPalette;
+    ScreenPalette.setBrush(QPalette::Window, bkgnd);
+    this->setPalette(ScreenPalette);
+
+    //Display termometer icons
+    QPixmap termometerIcon(":/resources/img/thermometer.png");
+    ui->qlabelTemperatureAdjustPic->setPixmap(termometerIcon.scaled(ui->qlabelTemperatureAdjustPic->width(),ui->qlabelTemperatureAdjustPic->height(),Qt::KeepAspectRatio));
+    ui->qlabelTemperatureDisplayPic ->setPixmap(termometerIcon.scaled(ui->qlabelTemperatureDisplayPic->width(),ui->qlabelTemperatureDisplayPic->height(),Qt::KeepAspectRatio));
+
+}
+
+void MainWindow::handlingThreads()
+{
+    //Thread connecting
+    connect(this, &MainWindow::startSerialPortThread, &serialPortThread, &SerialPortThread::doWork);
+    serialPortThread.moveToThread(_thread);
+    _thread->start();
+
+    serialPortThread.GetDataObject(serialPortData);
+
+    //Initialize serial port connection
+    qDebug() << "\nSerial Port communication initialization: ";
+    serialPortThread.InitSerialPortCom();
+
+    qDebug() << "\n Starting thread: ";
+    emit startSerialPortThread();
+}
+
+void MainWindow::signalsAndSlotsConnecting()
+{
+
+    //Connecting temperature display signal -> slot
+    connect(serialPortData, &SerialPortData::TransmitTemperatureToDisplay, this, &MainWindow::DisplayReceivedTemperature);
+
+}
 
 
 

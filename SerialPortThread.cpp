@@ -40,8 +40,6 @@ void SerialPortThread::doWork()
 
                 if(inputData.length() > 0)
                 {                   
-                    //Reading data sucessfull
-                    //qDebug() << "\nReceived: " << inputData;
                     _serialPortData->readInputData(inputData);
                     SequenceStep = 300;
                 }
@@ -65,8 +63,7 @@ void SerialPortThread::doWork()
             //Send data through serial port
             case 400:
             {
-                std::string TempAdjust = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxTempAdjust:069;.";
-                WriteToPort(TempAdjust);
+                WriteToPort(_serialPortData->getOutputData());
                 //Place for future data handshake
                 SequenceStep = 0;
                 QThread::msleep(100);

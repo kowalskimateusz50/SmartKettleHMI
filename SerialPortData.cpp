@@ -20,16 +20,19 @@ SerialPortData::SerialPortData()
 
 void SerialPortData::readInputData(string inputData)
 {
+    //Fame overview
+    //STM32 -> RPI "W:X;TEMPERATURE:XXXXXXX;STATUS:XXX;ERRORCODE:XXX;."
+
     //Save input data into private variable
     iInputData = inputData;
 
     //debug input message
-    qDebug() << "\nReceived: " << inputData;
+    qDebug() << "\nReceived: " << iInputData;
 
     //Extract temperature from input data
     if(extractTemperatureReading())
     {
-        qDebug() << "\n Temperature: " << iTemperatureReading << " 0c" << Qt::endl;
+        //qDebug() << "\n Temperature: " << iTemperatureReading << " 0c" << Qt::endl;
         emit TransmitTemperatureToDisplay(iTemperatureReading); //Send temperature readings to GUI
         //emit TransmitTemperatureToDisplay(iTemperatureReading); //Send temperature readings to GUI
     }
@@ -95,4 +98,22 @@ int SerialPortData::extractTemperatureReading()
         return 0;
 }
 
+/* Methods for creating output data frame */
+
+string SerialPortData::getOutputData()
+{
+    //Frame overview RPI -> STM32 "W:X;TEMPADJUST:XXX;STARTREQ:X;STOPREQ:X;."
+    //Initialize collective string
+    oOutputData = "";
+    //Temperature heating setpoint
+    oOutputData += "TEMPADJUST:" + std::to_string(oTemperatureAdjustment) + ";";
+    //Start request
+    oOutputData += "STARTREQ:" + std::to_string(oStartRequest) + ";";
+    //Stop request
+    oOutputData += "STOPREQ:" + std::to_string(oStopRequest) + ";";
+    //Add fram-ending sign
+    oOutputData += ".";
+
+    return oOutputData;
+}
 

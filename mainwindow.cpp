@@ -39,6 +39,8 @@ void MainWindow::on_pushButtonSave_clicked()
 
 }
 
+/* Section for setting up appearance of UI */
+
 void MainWindow::setSylesSettings()
 {
     //Adding title for widget

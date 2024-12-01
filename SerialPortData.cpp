@@ -77,7 +77,7 @@ string SerialPortData::extractDataFromString(string iInputData, string iPrefix, 
         RetString += iInputData[i];
     }
 
-    return RetString;
+    return RetString;xxsawdwdawa
 }
 
 int SerialPortData::extractTemperatureReading()

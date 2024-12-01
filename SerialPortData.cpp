@@ -21,13 +21,13 @@ SerialPortData::SerialPortData()
 void SerialPortData::readInputData(string inputData)
 {
     //Fame overview
-    //STM32 -> RPI "W:X;TEMPERATURE:XXXXXXX;STATUS:XXX;ERRORCODE:XXX;."
+    //STM32 -> RPI "TEMPERATURE:XXXXXXX;STATUS:XXX;ERRORCODE:XXX;."
 
     //Save input data into private variable
     iInputData = inputData;
 
     //debug input message
-    qDebug() << "\nReceived: " << iInputData;
+    //qDebug() << "\nReceived: " << iInputData;
 
     //Extract temperature from input data
     if(extractTemperatureReading())
@@ -102,7 +102,7 @@ int SerialPortData::extractTemperatureReading()
 
 string SerialPortData::getOutputData()
 {
-    //Frame overview RPI -> STM32 "W:X;TEMPADJUST:XXX;STARTREQ:X;STOPREQ:X;."
+    //Frame overview RPI -> STM32 "TEMPADJUST:XXX;STARTREQ:X;STOPREQ:X;."
     //Initialize collective string
     oOutputData = "";
     //Temperature heating setpoint
